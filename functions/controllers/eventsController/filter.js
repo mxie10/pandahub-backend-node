@@ -9,7 +9,7 @@ const filter = async (req, res) => {
     query = query.where('eventType', '==', eventType);
   }
   if (date) {
-    query = query.where('date', '==', new Date(date)); // Assumes `date` is a valid date string
+    query = query.where('date', '==', new Date(date)); 
   }
 
   const eventsSnapshot = await query.get();

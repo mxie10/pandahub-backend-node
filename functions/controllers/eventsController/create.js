@@ -5,7 +5,7 @@ const create = async (req, res) => {
   const body = req.body;
   body.updatedAt = FieldValue.serverTimestamp(); 
   const docRef = await db.collection('events').add(body);
-  res.status(200).json(
+  res.status(201).json(
     { 
       success: true,
       result: docRef,
