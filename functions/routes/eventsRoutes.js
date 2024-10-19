@@ -19,6 +19,6 @@ router.put('/:id', catchErrors(eventsMethods.update));
 router.delete('/:id', catchErrors(eventsMethods.remove));
 
 // Filter Events by Event Type or Date
-router.get('/filter', catchErrors(eventsMethods.filter));
+router.get('/filter/:eventType', catchErrors(eventsMethods.filter));
 
 module.exports = router; 

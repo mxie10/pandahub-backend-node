@@ -1,15 +1,12 @@
-const { getFirestore, FieldValue } = require('firebase-admin/firestore');
+const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 
 const filter = async (req, res) => {
-  const { eventType, date } = req.query;
+  const eventType = req.params.eventType;
   let query = db.collection('events');
 
   if (eventType) {
     query = query.where('eventType', '==', eventType);
-  }
-  if (date) {
-    query = query.where('date', '==', new Date(date)); 
   }
 
   const eventsSnapshot = await query.get();
