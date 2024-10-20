@@ -1,10 +1,13 @@
-const { getFirestore, FieldValue } = require('firebase-admin/firestore');
+const { getFirestore, FieldValue, Timestamp } = require('firebase-admin/firestore');
 const db = getFirestore();
 
 const update = async (req, res) => {
   const eventId = req.params.id;
-  const updatedData = req.body;
-  updatedData.updatedAt = FieldValue.serverTimestamp(); // Automatically update `updatedAt`
+  const body = req.body;
+  if (body.date) {
+    body.date = Timestamp.fromDate(new Date(body.date));
+  }
+  body.updatedAt = FieldValue.serverTimestamp(); // Automatically update `updatedAt`
   const querySnapshot = await db.collection('events').where('id', '==', eventId).limit(1).get();
   if (querySnapshot.empty) {
     return res.status(404).json({
@@ -13,7 +16,7 @@ const update = async (req, res) => {
     });
   }
   const doc = querySnapshot.docs[0];
-  await db.collection('events').doc(doc.id).update(updatedData);
+  await db.collection('events').doc(doc.id).update(body);
 
   res.status(200).json({
     success: true,
