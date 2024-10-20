@@ -16,7 +16,7 @@
  */
 
 const admin = require('firebase-admin');
-admin.initializeApp();
+admin.initializeApp({});
 const express = require('express');
 const cors = require('cors');
 const routes = require('./routers');
